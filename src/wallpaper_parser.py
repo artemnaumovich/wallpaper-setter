@@ -1,56 +1,62 @@
-# wallpaper parser
 
 import requests
-import settings
 from bs4 import BeautifulSoup as bs
 
 
 
+class WallpaperParser:
 
-def get_html(url, params):
-	pass
-
-
-def get_resolution_page_url(resolution):# build
-	pass
-
-
-def get_first_page_url(resolution, category):# build
-	pass
+	HOST = 'https://wallpaperscraft.com'
+	HEADERS = {
+		'accept': '*/*',
+		'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'
+	}
+	RESOLUTION_PAGE_URL = HOST + '/all/{resolution}'
+	FIRST_PAGE_URL = HOST + '/catalog/{category}/{resolution}'
 
 
-def get_number_of_pages(resolution, category):# parse
-	pass
+	def __init__(self, category, resolution):
+		pass
 
 
-def get_page_url_by_number(resolution, category, number):# build
-	pass
+	# precalc methods
+	def precalc_number_of_pages(self):
+		pass
+
+	def precalc_number_of_pictures(self):
+		pass
 
 
-def get_last_page_url(resolution, category):# build
-	pass
+	# build methods
+	def build_resolution_page_url(self):
+		pass
+
+	def build_page_by_number_url(self, number):
+		pass
+
+	def build_first_page_url(self):
+		pass
+
+	def build_last_page_url(self):
+		pass
 
 
-def get_number_of_pictures_on_page(url):# parse
-	pass
+	# get methods
+	def get_html(self, url):
+		pass
+
+	def get_soup(self, url):
+		pass
+
+	def download_picture(self, url):
+		pass
 
 
-def get_number_of_pictures(category, resolution):# parse public
-	pass
+	# additional
+	def page_not_found(self, url):
+		pass
 
 
-def get_page_content_by_number(resolution, category, number):# parse
-	pass
-
-
-def get_picture_on_page_by_number(url, number):# parse
-	pass
-
-
-def get_picture_page_download_url(url):# parse
-	pass
-
-
-def get_picture_by_number(resolution, category, number):# parse public
-	pass
-	
+	# api
+	def get_random_picture(self):
+		pass

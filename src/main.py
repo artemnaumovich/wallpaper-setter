@@ -1,7 +1,5 @@
-# main
 
 import wallpaper_parser
-
 
 
 def get_picture(resolution, category):
