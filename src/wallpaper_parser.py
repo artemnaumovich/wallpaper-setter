@@ -12,14 +12,13 @@ class WallpaperParser:
 		'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'
 	}
 	RESOLUTION_PAGE_URL = HOST + '/all/{resolution}'
-	FIRST_PAGE_URL = HOST + '/catalog/{category}/{resolution}'
+	PAGE_URL = HOST + '/catalog/{category}/{resolution}/page{number}'
 
 
 	def __init__(self, category, resolution):
 		pass
 
 
-	# precalc methods
 	def precalc_number_of_pages(self):
 		pass
 
@@ -27,7 +26,6 @@ class WallpaperParser:
 		pass
 
 
-	# build methods
 	def build_resolution_page_url(self):
 		pass
 
@@ -41,18 +39,29 @@ class WallpaperParser:
 		pass
 
 
-	# get methods
-	def get_html(self, url):
-		pass
+	@classmethod
+	def get_html(cls, url):
+		resp = requests.get(url=url, headers=cls.HEADERS)
+		return resp
 
-	def get_soup(self, url):
-		pass
+	@classmethod
+	def get_content(cls, url):
+		html = cls.get_html(url)
+		content = html.content
+		return content
 
-	def download_picture(self, url):
-		pass
+	@classmethod
+	def get_soup(cls, url):
+		content = cls.get_content(url)
+		soup = bs(content, 'html.parser')
+		return soup
+
+	@classmethod
+	def download_picture(cls, url):
+		picture = cls.get_content(url)
+		return picture
 
 
-	# additional
 	def page_not_found(self, url):
 		pass
 
