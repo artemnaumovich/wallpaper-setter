@@ -12,11 +12,12 @@ class WallpaperParser:
 		'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'
 	}
 	RESOLUTION_PAGE_URL = HOST + '/all/{resolution}'
-	PAGE_URL = HOST + '/catalog/{category}/{resolution}/page{number}'
+	PAGE_URL = HOST + '/catalog/{category}/{resolution}/page{page_number}'
 
 
 	def __init__(self, category, resolution):
-		pass
+		self.category = category
+		self.resolution = resolution
 
 
 	def precalc_number_of_pages(self):
@@ -27,13 +28,16 @@ class WallpaperParser:
 
 
 	def build_resolution_page_url(self):
-		pass
+		url = self.RESOLUTION_PAGE_URL.format(resolution=self.resolution)
+		return url
 
-	def build_page_by_number_url(self, number):
-		pass
+	def build_page_url_by_number(self, number):
+		url = self.PAGE_URL.format(category=self.category, resolution=self.resolution, page_number=number)
+		return url
 
 	def build_first_page_url(self):
-		pass
+		url = self.build_page_url_by_number(number=1)
+		return url
 
 	def build_last_page_url(self):
 		pass
