@@ -1,13 +1,10 @@
 
 from general_parser import GeneralParser
+import random
 
 class WallpaperParser(GeneralParser):
 
 	HOST = 'https://wallpaperscraft.com'
-	HEADERS = {
-		'accept': '*/*',
-		'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'
-	}
 	RESOLUTION_PAGE_URL = HOST + '/all/{resolution}'
 	PAGE_URL = HOST + '/catalog/{category}/{resolution}/page{page_number}'
 
@@ -39,23 +36,36 @@ class WallpaperParser(GeneralParser):
 
 	def precalc_number_of_pictures_on_page(self):
 		first_page_url = self.build_first_page_url()
-		pictures = self.get_picture_links_on_page(first_page_url)
-		number_of_pictures_on_page = len(pictures)
+		picture_urls = self.get_picture_urls_on_page(first_page_url)
+		number_of_pictures_on_page = len(picture_urls)
 		return number_of_pictures_on_page
 
 	def precalc_number_of_pictures(self):
 		last_page_url = self.build_last_page_url()
-		picture_links_on_last_page = self.get_picture_links_on_page(last_page_url)
-		number_of_pictures_on_last_page = len(picture_links_on_last_page)
+		picture_urls_on_last_page = self.get_picture_urls_on_page(last_page_url)
+		number_of_pictures_on_last_page = len(picture_urls_on_last_page)
 		number_of_pictures = (self.number_of_pages - 1) * self.number_of_pictures_on_page + number_of_pictures_on_last_page
 		return number_of_pictures
 
-	def get_picture_links_on_page(self, url):
+	def get_picture_urls_on_page(self, url):
 		soup = self.get_soup(url)
 		picture_list = soup.find('ul', class_='wallpapers__list')
 		picture_items = picture_list.find_all('li', class_='wallpapers__item')
-		picture_links = [item.find('a', class_='wallpapers__link').get('href') for item in picture_items]
-		return picture_links
+		picture_hrefs = [item.find('a', class_='wallpapers__link').get('href') for item in picture_items]
+		picture_urls = [self.build_picture_page_url(href) for href in picture_hrefs]
+		return picture_urls
+
+	def get_picture_page_url_by_number(self, url, number):
+		soup = self.get_soup(url)
+		picture_urls = self.get_picture_urls_on_page(url)
+		picture_url = picture_urls[number - 1]
+		return picture_url
+
+	def get_picture_download_url(self, url):
+		soup = self.get_soup(url)
+		item = soup.find('div', class_='wallpaper__placeholder')
+		download_url = item.find('a').get('href')
+		return download_url
 
 	def build_resolution_page_url(self):
 		url = self.RESOLUTION_PAGE_URL.format(resolution=self.resolution)
@@ -71,6 +81,10 @@ class WallpaperParser(GeneralParser):
 
 	def build_last_page_url(self):
 		url = self.build_page_url_by_number(self.number_of_pages)
+		return url
+
+	def build_picture_page_url(self, href):
+		url = self.HOST + href
 		return url
 
 	def page_not_found(self, url):
