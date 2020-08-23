@@ -92,4 +92,16 @@ class WallpaperParser(GeneralParser):
 
 	# api
 	def get_random_picture(self):
-		pass
+		picture_number = random.randint(1, self.number_of_pictures)
+		page_number = (picture_number + self.number_of_pictures_on_page - 1) // (self.number_of_pictures_on_page)
+		picture_number_on_page = picture_number - (page_number - 1) * self.number_of_pictures_on_page
+		
+		print(f'all: {self.number_of_pictures}')
+		print(f'number: {picture_number}')
+		
+		page_url = self.build_page_url_by_number(page_number)
+		picture_page_url = self.get_picture_page_url_by_number(page_url, picture_number_on_page)
+		download_url = self.get_picture_download_url(picture_page_url)
+		picture = self.download_picture(download_url)
+
+		return picture
