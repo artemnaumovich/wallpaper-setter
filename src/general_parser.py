@@ -21,7 +21,7 @@ class GeneralParser:
 		content = self.get_content(url)
 		soup = bs(content, 'html.parser')
 		return soup
-
+	
 	def download_picture(self, url):
 		picture = self.get_content(url)
 		return picture

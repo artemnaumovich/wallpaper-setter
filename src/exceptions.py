@@ -1,6 +1,7 @@
 
 class NoSuchResolutionException(Exception):
-	pass
+	"""Parsed site does not have pictures with such resolution"""
+
 
 class NoSuchCategoryException(Exception):
-	pass
+	"""Parsed site does not have pictures with such category"""

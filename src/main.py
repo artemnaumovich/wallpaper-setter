@@ -1,30 +1,47 @@
 
+from general_parser import GeneralParser
 from wallpaper_parser import WallpaperParser
 from time import time
 import ctypes
+import eel
 
 
-def get_picture(category, resolution):
+
+eel.init('web')
+
+
+@eel.expose
+def ping(x):
+	print(f'message: {x}')
+	return 'pong'
+
+
+@eel.expose
+def get_picture_url(category, resolution):
 	parser = WallpaperParser(category=category, resolution=resolution)
-	picture = parser.get_random_picture()
-	return picture
+	picture_url = parser.get_random_picture_url()
+	return picture_url
 
 
-def save_picture(path, picture):
+@eel.expose
+def save_picture(path, url):
+	parser = GeneralParser()
+	picture = parser.download_picture(url)
 	with open(path, 'wb') as f:
 		f.write(picture)
 
 
+@eel.expose
 def set_wallpaper(path):	
 	SPI_SETDESKWALLPAPER    = 0x0014
 	SPI_SETDESKPATTERN      = 0x0015
 	SPIF_UPDATEINIFILE      = 0x01
 	SPIF_SENDWININICHANGE   = 0x02
 	ctypes.windll.user32.SystemParametersInfoW(
-	    SPI_SETDESKWALLPAPER,
-	    0,
-	    path,
-	    SPIF_SENDWININICHANGE | SPIF_UPDATEINIFILE
+		SPI_SETDESKWALLPAPER,
+		0,
+		path,
+		SPIF_SENDWININICHANGE | SPIF_UPDATEINIFILE
 	)
 
 
@@ -35,18 +52,21 @@ def read_data():
 	return directory, category, resolution
 
 
+@eel.expose
 def build_path(directory, category, resolution):
 	file_path = f'{directory}/{category}_{resolution}_{int(time())}.jpg'
 	return file_path
 
+eel.start('index.html', size=(900, 600))
 
 def main():
+
 	
 	directory, category, resolution = read_data()
 	path = build_path(directory=directory, category=category, resolution=resolution)
 
-	picture = get_picture(category=category, resolution=resolution)
-	save_picture(path=path, picture=picture)
+	url = get_picture_url(category=category, resolution=resolution)
+	save_picture(path=path, url=url)
 	set_wallpaper(path)
 
 
