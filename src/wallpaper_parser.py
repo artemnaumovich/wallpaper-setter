@@ -87,9 +87,32 @@ class WallpaperParser(GeneralParser):
 		url = self.HOST + href
 		return url
 
-	def page_not_found(self, url):
+	def request_is_correct(self, url):
 		pass
 
+	@classmethod
+	def get_filters(cls):
+		soup = cls.get_soup(url=cls.HOST)
+		items = soup.find_all('div', class_='filters')
+		
+		categories_item = items[0]
+		categories_links = categories_item.find_all('a', class_='filter__link')
+		categories_hrefs = [link.get('href') for link in categories_links]
+		categories = [href.partition('/catalog/')[-1] for href in categories_hrefs]
+
+		resolutions_item = items[1]
+		resolutions_list = resolutions_item.find_all('li', class_='filter')
+		#resolutions_links = resolutions_item.find_all('a', class_='filter__link')
+		resolutions_links = [element.find('a', class_='filter__link') for element in resolutions_list]
+		resolutions_hrefs = [link.get('href') for link in resolutions_links]
+		resolutions = [href.partition('/all/')[-1] for href in resolutions_hrefs]
+
+		filters = {
+			'categories': categories,
+			'resolutions': resolutions
+		}
+
+		return filters
 
 	def get_random_picture_url(self):
 		picture_number = random.randint(1, self.number_of_pictures)

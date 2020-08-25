@@ -17,6 +17,11 @@ def ping(x):
 
 
 @eel.expose
+def get_filters():
+	return WallpaperParser.get_filters()
+
+
+@eel.expose
 def get_picture_url(category, resolution):
 	parser = WallpaperParser(category=category, resolution=resolution)
 	picture_url = parser.get_random_picture_url()
@@ -59,16 +64,14 @@ def build_path(directory, category, resolution):
 
 eel.start('index.html', size=(900, 600))
 
-def main():
 
-	
-	directory, category, resolution = read_data()
+'''
+def main():	
+ 	directory, category, resolution = read_data()
 	path = build_path(directory=directory, category=category, resolution=resolution)
-
 	url = get_picture_url(category=category, resolution=resolution)
 	save_picture(path=path, url=url)
 	set_wallpaper(path)
-
-
 if __name__ == '__main__':
 	main()
+'''

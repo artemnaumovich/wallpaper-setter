@@ -8,20 +8,24 @@ class GeneralParser:
 		'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'
 	}
 	
-	def get_html(self, url):
-		resp = requests.get(url=url, headers=self.HEADERS)
+	@classmethod
+	def get_html(cls, url):
+		resp = requests.get(url=url, headers=cls.HEADERS)
 		return resp
 
-	def get_content(self, url):
-		html = self.get_html(url)
+	@classmethod
+	def get_content(cls, url):
+		html = cls.get_html(url)
 		content = html.content
 		return content
 
-	def get_soup(self, url):
-		content = self.get_content(url)
+	@classmethod
+	def get_soup(cls, url):
+		content = cls.get_content(url)
 		soup = bs(content, 'html.parser')
 		return soup
 	
-	def download_picture(self, url):
-		picture = self.get_content(url)
+	@classmethod
+	def download_picture(cls, url):
+		picture = cls.get_content(url)
 		return picture
