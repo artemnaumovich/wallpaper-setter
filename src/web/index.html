@@ -3,20 +3,17 @@
 <head>
 	<meta charset="UTF-8">
 	<title>WS</title>
-	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="src/styles/styles.css">
 	<script src="eel.js"></script>
-	
 </head>
 <body>
-
-	<input id="category" type="text" placeholder="Input picture category">
-	<input id="resolution" type="text" placeholder="Input picture resolution">
-	<button id="get">Get</button>
-	<button id="set">Set</button>
-
-	<div id="info"></div>
-	<img id="sample">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script type="text/javascript" src="main.js"></script>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+	<div id="root"></div>
+	
+	<div id="loading-overlay">
+		<!--<img src="resources/logo.png"/>-->
+		Loading...
+	</div>
+	<script type="module" src="index.js"></script>
 </body>
 </html>

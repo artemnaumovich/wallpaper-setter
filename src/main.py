@@ -1,6 +1,7 @@
 
 from general_parser import GeneralParser
 from wallpaper_parser import WallpaperParser
+from exceptions import NoSuchResolutionException
 from time import time
 import ctypes
 import eel
@@ -50,6 +51,13 @@ def set_wallpaper(path):
 	)
 
 
+@eel.expose
+def set_picture(path, url, category, resolution):
+	picture_path = build_path(path, category, resolution)
+	save_picture(picture_path, url)
+	set_wallpaper(picture_path)
+
+
 def read_data():
 	directory = input('Input directory: ').strip()
 	category = input('Input category: ').strip()
@@ -57,14 +65,22 @@ def read_data():
 	return directory, category, resolution
 
 
+# @eel.expose
+# def is_path_exists(path):
+# 	pass
+
+
+# need to refactor(join path)
 @eel.expose
 def build_path(directory, category, resolution):
 	file_path = f'{directory}/{category}_{resolution}_{int(time())}.jpg'
 	return file_path
 
+
 eel.start('index.html', size=(900, 600))
 
 
+# add console version
 '''
 def main():	
  	directory, category, resolution = read_data()

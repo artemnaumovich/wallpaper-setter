@@ -102,7 +102,6 @@ class WallpaperParser(GeneralParser):
 
 		resolutions_item = items[1]
 		resolutions_list = resolutions_item.find_all('li', class_='filter')
-		#resolutions_links = resolutions_item.find_all('a', class_='filter__link')
 		resolutions_links = [element.find('a', class_='filter__link') for element in resolutions_list]
 		resolutions_hrefs = [link.get('href') for link in resolutions_links]
 		resolutions = [href.partition('/all/')[-1] for href in resolutions_hrefs]
@@ -122,6 +121,5 @@ class WallpaperParser(GeneralParser):
 		page_url = self.build_page_url_by_number(page_number)
 		picture_page_url = self.get_picture_page_url_by_number(page_url, picture_number_on_page)
 		download_url = self.get_picture_download_url(picture_page_url)
-		#picture = self.download_picture(download_url)
 
 		return download_url
