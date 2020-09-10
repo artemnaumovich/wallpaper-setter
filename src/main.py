@@ -7,16 +7,6 @@ import ctypes
 import eel
 
 
-
-eel.init('web')
-
-
-@eel.expose
-def ping(x):
-	print(f'message: {x}')
-	return 'pong'
-
-
 @eel.expose
 def get_filters():
 	return WallpaperParser.get_filters()
@@ -77,17 +67,10 @@ def build_path(directory, category, resolution):
 	return file_path
 
 
-eel.start('index.html', size=(900, 600))
-
-
-# add console version
-'''
 def main():	
- 	directory, category, resolution = read_data()
-	path = build_path(directory=directory, category=category, resolution=resolution)
-	url = get_picture_url(category=category, resolution=resolution)
-	save_picture(path=path, url=url)
-	set_wallpaper(path)
+	eel.init('web')
+	eel.start('index.html', size=(900, 600))
+
+
 if __name__ == '__main__':
 	main()
-'''
