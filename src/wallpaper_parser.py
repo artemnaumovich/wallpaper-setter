@@ -2,6 +2,7 @@
 from general_parser import GeneralParser
 import random
 
+
 class WallpaperParser(GeneralParser):
 
 	HOST = 'https://wallpaperscraft.com'

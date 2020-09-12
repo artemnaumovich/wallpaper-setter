@@ -5,6 +5,7 @@ from exceptions import NoSuchResolutionException
 from time import time
 import ctypes
 import eel
+import constants
 
 
 @eel.expose
@@ -14,7 +15,16 @@ def get_filters():
 
 @eel.expose
 def get_picture_url(category, resolution, cache={}):
-	parser = WallpaperParser(category=category, resolution=resolution)
+	key = (category, resolution)
+	if key in cache and time() - cache[key]['time_stamp'] <= constants.RELOAD_TIME:
+		parser = cache[key]['parser']
+	else:
+		parser = WallpaperParser(category=category, resolution=resolution)
+		upd = {
+			'parser': parser,
+			'time_stamp': time()
+		}
+		cache[key] = upd
 	picture_url = parser.get_random_picture_url()
 	return picture_url
 
@@ -69,7 +79,7 @@ def build_path(directory, category, resolution):
 
 def main():	
 	eel.init('web')
-	eel.start('index.html', size=(900, 600))
+	eel.start('index.html', size=(constants.WIDTH, constants.HEIGHT))
 
 
 if __name__ == '__main__':
