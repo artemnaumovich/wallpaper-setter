@@ -13,7 +13,7 @@ def get_filters():
 
 
 @eel.expose
-def get_picture_url(category, resolution):
+def get_picture_url(category, resolution, cache={}):
 	parser = WallpaperParser(category=category, resolution=resolution)
 	picture_url = parser.get_random_picture_url()
 	return picture_url
