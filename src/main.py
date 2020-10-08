@@ -6,7 +6,7 @@ from time import time
 import ctypes
 import eel
 import constants
-
+import os
 
 @eel.expose
 def get_filters():
@@ -70,11 +70,11 @@ def read_data():
 # 	pass
 
 
-# need to refactor(join path)
 @eel.expose
 def build_path(directory, category, resolution):
-	file_path = f'{directory}/{category}_{resolution}_{int(time())}.jpg'
-	return file_path
+	file_name = f'{category}_{resolution}_{int(time())}.jpg'
+	abs_path = os.path.join(directory, file_name)
+	return abs_path
 
 
 def main():	
