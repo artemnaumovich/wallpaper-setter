@@ -1,12 +1,13 @@
 
 from general_parser import GeneralParser
 from wallpaper_parser import WallpaperParser
-from exceptions import NoSuchResolutionException
+from exceptions import OSIsNotSupportedError
 from time import time
 import ctypes
 import eel
 import constants
 import os
+
 
 @eel.expose
 def get_filters():
@@ -38,7 +39,7 @@ def save_picture(path, url):
 
 
 @eel.expose
-def set_wallpaper(path):	
+def set_wallpaper(path):
 	SPI_SETDESKWALLPAPER    = 0x0014
 	SPI_SETDESKPATTERN      = 0x0015
 	SPIF_UPDATEINIFILE      = 0x01
@@ -53,6 +54,8 @@ def set_wallpaper(path):
 
 @eel.expose
 def set_picture(path, url, category, resolution):
+	if path == '' or not os.access(path, os.F_OK):
+		raise FileNotFoundError
 	picture_path = build_path(path, category, resolution)
 	save_picture(picture_path, url)
 	set_wallpaper(picture_path)
@@ -63,11 +66,6 @@ def read_data():
 	category = input('Input category: ').strip()
 	resolution = input('Input resolution: ').strip()
 	return directory, category, resolution
-
-
-# @eel.expose
-# def is_path_exists(path):
-# 	pass
 
 
 @eel.expose

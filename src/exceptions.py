@@ -5,3 +5,4 @@ class NoSuchResolutionException(Exception):
 
 class NoSuchCategoryException(Exception):
 	"""Parsed site does not have pictures with such category"""
+	

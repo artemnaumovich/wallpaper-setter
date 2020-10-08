@@ -1,4 +1,4 @@
-import {wallpaperService} from '../services/wallpaperService.js';
+import { wallpaperService } from '../services/wallpaperService.js';
 import { createElement } from '../helpers/domHelper.js';
 import { renderPreview } from './preview.js';
 
@@ -35,6 +35,12 @@ async function getPicture() {
         setElement.style.visibility = 'visible';
     } catch (error) {
         console.warn(error);
+        const msg = error.errorText;
+        if (msg.startsWith('ConnectionError')) {
+            alert('Check your connection and try again');
+        } else {
+            alert('Unexpexted error. Try again later');
+        }
     }
     
 }
@@ -56,5 +62,15 @@ async function setPicture() {
         await wallpaperService.setPicture(url, path, selectedCategory, selectedResolution);
     } catch (error) {
         console.warn(error);
+        const msg = error.errorText;
+        if (msg.startsWith('PermissionError')) {
+            alert('You do not have permission to save the file to the specified directory');
+        } else if (msg.startsWith('FileNotFoundError')) {
+            alert('Directory does not exist');
+        } else if (msg.startsWith('ConnectionError')) {
+            alert('Check your connection and try again');
+        } else {
+            alert('Unexpexted error. Try again later');
+        }
     }
 }

@@ -4,7 +4,7 @@ class WallpaperService {
             const result = await eel.get_filters()();
             return result;
         } catch (error) {
-            throw error; // mb change
+            throw error;
         }
     }
 
