@@ -69,8 +69,10 @@ async function setPicture() {
             alert('Directory does not exist');
         } else if (msg.startsWith('ConnectionError')) {
             alert('Check your connection and try again');
+        } else if (msg.startsWith('OSIsNotSupportedError')){
+            alert('The operating system is not supported by this application');
         } else {
             alert('Unexpexted error. Try again later');
-        }
+        } 
     }
 }

@@ -3,6 +3,7 @@ from general_parser import GeneralParser
 from wallpaper_parser import WallpaperParser
 from exceptions import OSIsNotSupportedError
 from time import time
+from sys import platform
 import ctypes
 import eel
 import constants
@@ -40,16 +41,19 @@ def save_picture(path, url):
 
 @eel.expose
 def set_wallpaper(path):
-	SPI_SETDESKWALLPAPER    = 0x0014
-	SPI_SETDESKPATTERN      = 0x0015
-	SPIF_UPDATEINIFILE      = 0x01
-	SPIF_SENDWININICHANGE   = 0x02
-	ctypes.windll.user32.SystemParametersInfoW(
-		SPI_SETDESKWALLPAPER,
-		0,
-		path,
-		SPIF_SENDWININICHANGE | SPIF_UPDATEINIFILE
-	)
+	if platform == 'win32':
+		SPI_SETDESKWALLPAPER    = 0x0014
+		SPI_SETDESKPATTERN      = 0x0015
+		SPIF_UPDATEINIFILE      = 0x01
+		SPIF_SENDWININICHANGE   = 0x02
+		ctypes.windll.user32.SystemParametersInfoW(
+			SPI_SETDESKWALLPAPER,
+			0,
+			path,
+			SPIF_SENDWININICHANGE | SPIF_UPDATEINIFILE
+		)
+	else:
+		raise OSIsNotSupportedError
 
 
 @eel.expose
