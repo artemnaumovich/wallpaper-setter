@@ -52,6 +52,9 @@ def set_wallpaper(path):
 			path,
 			SPIF_SENDWININICHANGE | SPIF_UPDATEINIFILE
 		)
+	elif platform == 'linux':
+		command = f'gsettings set org.gnome.desktop.background picture-uri file:{path}'
+		os.system(command)
 	else:
 		raise OSIsNotSupportedError
 
