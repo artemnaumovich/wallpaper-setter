@@ -6,6 +6,8 @@ body {
     position: fixed;
 }
 
+
+/*loading-overtlay*/
 #loading-overlay {
     height: 100%;
     width: 100%;
@@ -18,6 +20,7 @@ body {
 }
 
 
+/*preview*/
 .wallpaper-preview__root {
     width: 100%;
     height: 450px;
@@ -33,6 +36,8 @@ body {
     border: none;
 }
 
+
+/*root*/
 #root {
     margin: 20px;
 }
@@ -44,6 +49,8 @@ body {
     margin-bottom: 10px;
 }
 
+
+/*margins*/
 .get-wallpaper__root {
     margin-bottom: 5px;
 }
@@ -56,6 +63,8 @@ body {
     border-radius: 10px;
 }
 
+
+/*control-elements*/
 .btn-get, .btn-get:active, .btn-get:focus,
 .btn-set, .btn-set:active, .btn-set:focus,
 .filter, .filter:active, .filter:focus,
