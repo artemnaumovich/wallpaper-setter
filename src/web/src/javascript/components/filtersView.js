@@ -60,7 +60,8 @@ function createOption(value) {
 function createPathElement() {
     const attributes = {
         type: 'text',
-        id: 'download-path'
+        id: 'download-path',
+        spellcheck: 'false'
     }
     const pathElement = createElement({ tagName: 'input', className: 'download-path__input', attributes});
 

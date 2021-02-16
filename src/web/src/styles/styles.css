@@ -6,9 +6,31 @@ body {
     position: fixed;
 }
 
-#preview {
+#loading-overlay {
     height: 100%;
     width: 100%;
+}
+
+#loading-overlay img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+
+
+.wallpaper-preview__root {
+    width: 100%;
+    height: 450px;
+    border-radius: 10px;
+    border: none;
+}
+
+#preview[src*="http"] {
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border: none;
 }
 
 #root {
@@ -41,7 +63,6 @@ body {
 .download-path__input:focus {
     outline: none;
 }
-
 
 .filter, .btn-get, .download-path__input, .btn-set {
     margin: 0 5px;
