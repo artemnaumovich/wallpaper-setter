@@ -1,4 +1,3 @@
-
 RELOAD_TIME = 10
 
 WIDTH = 900
